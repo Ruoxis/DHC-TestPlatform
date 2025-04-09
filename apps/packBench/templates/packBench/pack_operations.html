@@ -1,0 +1,69 @@
+{% extends "navigation/packBenchBase.html" %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>打包操作</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+
+    <h1>打包操作</h1>
+    {% if message %}
+        {{ message }}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ field.html_name }}
+                        <div class="mb-4">
+                        <label class="form-label">{{ form.environment.label }}</label>
+                        {{ form.environment }}
+                        <div class="anchor-hint">请选择运行环境0.0</div>
+                    </div>
+        {% for field in form %}
+            {% if field.html_name not in "upload_zongfu sign_package code_branch" %}
+                <div class="form-group">
+
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div id="upload_zongfu_field" class="form-group">
+            {{ form.upload_zongfu.label_tag }} {{ form.upload_zongfu }}
+        </div>
+        <div id="sign_package_field" class="form-group">
+            {{ form.sign_package.label_tag }} {{ form.sign_package }}
+        </div>
+        <div id="code_branch_field" class="form-group">
+            {{ form.code_branch.label_tag }} {{ form.code_branch }}
+        </div>
+        <button type="submit" class="btn">提交</button>
+    </form>
+
+    <script>
+        setTimeout(function () {
+            var alertBox = document.getElementById('alertBox1');
+            if (alertBox) {
+                alertBox.style.opacity = 0;
+            }
+        }, 3000);
+    </script>
+    </body>
+    </html>
+{% endblock %}

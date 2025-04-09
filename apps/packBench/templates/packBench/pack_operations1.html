@@ -1,0 +1,314 @@
+{% extends "navigation/packBenchBase.html" %}
+{% load static %}
+{% block styles %}
+    <style>
+        /* 自定义样式 */
+        .card-header.bg-info {
+            background-color: #0dcaf0 !important;
+        }
+
+        .form-check.card {
+            transition: all 0.2s;
+        }
+
+        .form-check.card:hover {
+            border-color: #0dcaf0;
+            box-shadow: 0 0 0 1px rgba(13, 202, 240, 0.3);
+        }
+
+        .centered-container {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+        {#align-items: center; /* 垂直居中 */#} min-height: 100vh; /* 视窗高度 */
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    {% if message %}
+        <div id="alertBox1" class="alert alert-primary d-flex align-items-center"
+             style="position: fixed; top: 120px; right: 20px; z-index: 1000; max-width: 400px;"
+             role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20"
+                 height="20"
+                 class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+                 viewBox="0 0 16 16"
+                 role="img"
+                 aria-label="Warning:">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+            <div>
+                {{ message }}
+            </div>
+        </div>
+    {% endif %}
+    <div style="background-color: #CCCCCC;">
+        <div class="container centered-container">
+            <!-- 主卡片容器 -->
+            <div class="card shadow-sm border-0" style="max-width: 800px;">
+                <!-- 标题区 -->
+                <div class="card-header bg-info text-white py-3">
+                    <h5 class="mb-0 font-weight-light text-center">打包操作</h5>
+                </div>
+                <!-- 表单主体 -->
+                <form method="post" class="p-4">
+                    {% csrf_token %}
+
+                    <!-- 环境选择 -->
+                    {% if environment %}
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label class="form-label fw-bold">环境选择</label>
+                                <span class="badge badge-pill badge-info">(此选择将影响后续部署流程)</span>
+                            </div>
+                            <select class="form-select anchor-select" data-anchor="dropdown" name="environment"
+                                    required>
+                                {% for env in environment %}
+                                    <option value="{{ env.id }}"
+                                            {% if forloop.first %}selected{% endif %}>{{ env.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="anchor-divider my-3"></div>
+                        </div>
+                    {% endif %}
+
+                    <!-- 服务类型选择 -->
+                    {% if pack_types %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold d-block mb-3">选择服务类型 </label>
+                            <div class="d-flex flex-wrap gap-4 ">
+                                <div class="form-check form-switch" style="margin-left: 25px">
+                                    <input type="hidden" name="is_regional" value="false">
+                                    <input class="form-check-input option_check_choice"
+                                           type="checkbox"
+                                           role="switch"
+                                           id="is_regional"
+                                           name="is_regional"
+                                           value="true"
+                                           data-anchor="toggle">
+                                    <label class="form-check-label">
+                                        是否区域发布
+                                        <span class="badge badge-pill badge-info">(设置后将不会进行全国发布)</span>
+                                    </label>
+
+                                </div>
+
+                            </div>
+                            <div class="row g-3">
+                                {% for pack_type in pack_types %}
+                                    <div class="col-md-6">
+                                        <div class="form-check card p-3 border">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="pack_types"
+                                                   id="pt_{{ pack_type.id }}"
+                                                   value="{{ pack_type.id }}"
+                                                   data-anchor="checkbox"
+                                                   data-option-group="{{ pack_type.group }}">
+                                            <label class="form-check-label fw-medium" for="pt_{{ pack_type.id }}">
+                                                {{ pack_type.name }}
+                                                {% if pack_type.alternate_name %}-({{ pack_type.alternate_name }}
+                                                    ) {% endif %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- 动态选项区 -->
+                    <div id="dynamicOptions" class="mb-4" style="display: none; background-color: #ced4da">
+                        {% if option_choice %}
+                            <label class="form-label fw-bold d-block mb-3">高级选项</label>
+                            <div class="d-flex flex-wrap gap-4 ">
+                                {% for check_choice in option_choice %}
+                                    <div class="form-check form-switch" style="margin-left: 25px">
+                                        <input type="hidden" name="{{ check_choice.name }}" value="false">
+                                        <input class="form-check-input option_check_choice"
+                                               type="checkbox"
+                                               role="switch"
+                                               id="opt_{{ check_choice.name }}"
+                                               name="{{ check_choice.name }}"
+                                               value="true"
+                                               data-anchor="toggle">
+                                        <label class="form-check-label" for="opt_{{ check_choice.name }}">
+                                            {{ check_choice.title }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="mb-4">
+                            <div class="anchor-divider-gradient my-4"></div>
+                            <label class="form-label fw-bold d-block mb-3 ">分支类型选择</label>
+                            <select id="branch_type" class="form-select anchor-select" data-anchor="dropdown"
+                                    name="branch_type" required>
+                                {% for b_type in branch_types %}
+                                    <option value="{{ b_type.value }}" {% if forloop.first %}selected{% endif %}>
+                                        {{ b_type.label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="id_code_branch" class="form-group">
+                            {{ form.code_branch.label_tag }} {{ form.code_branch }}
+                        </div>
+                    </div>
+
+                    <!-- 机器人选择 -->
+                    {% if robot %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold d-block mb-2">通知机器人</label>
+                            <select class="form-select anchor-select" data-anchor="dropdown" name="robot">
+                                {% for bot in robot %}
+                                    <option value="{{ bot.id }}">{{ bot.name }}-{{ bot.description }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+
+                    <!-- 提交按钮 -->
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary anchor-btn py-2">
+                            <i class="bi bi-send me-2"></i> 开始打包
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static '/packBench/js/main.js' %}"></script>
+
+    <script>
+        document.querySelectorAll('.option_check_choice').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                this.previousElementSibling.disabled = this.checked;
+            });
+        });
+        // 初始化DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function () {
+            // 缓存常用DOM元素
+            const branchTypeSelect = document.getElementById('branch_type');
+            const codeBranchSelect = document.getElementById('id_code_branch');
+            const loadCodeBranchesUrl = '{% url "pack:load_code_branches" %}';
+
+            function showError(message) {
+                const select = document.getElementById('id_code_branch');
+                if (select) {
+                    select.innerHTML = `<option value="" disabled selected>${message}</option>`;
+                }
+                console.error(message);
+            }
+
+            function loadCodeBranches(packTypes, branchType) {
+                // 1. 确保获取到目标select元素
+                const codeBranchSelect = document.getElementById('id_code_branch');
+                if (!codeBranchSelect) {
+                    console.error('错误：未找到id_code_branch元素');
+                    return;
+                }
+
+                // 2. 验证输入参数
+                if (!Array.isArray(packTypes)) {
+                    console.error('错误：packTypes必须是数组');
+                    return;
+                }
+
+                $.ajax({
+                    url: loadCodeBranchesUrl,
+                    method: 'GET',
+                    data: {'pack_types': packTypes.join(','), "branch_type": branchType},
+                    beforeSend: function () {
+                        codeBranchSelect.innerHTML = '<option value="">加载中...</option>';
+                    },
+                    success: function (data) {
+                        // 3. 验证返回数据
+                        if (typeof data !== 'string' || data.trim() === '') {
+                            showError('返回数据无效');
+                            return;
+                        }
+
+                        codeBranchSelect.innerHTML = data;
+
+                        // 4. 安全地检查选项数量
+                        if (codeBranchSelect.options && codeBranchSelect.options.length <= 1) {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = '无可用分支';
+                            option.disabled = true;
+                            option.selected = true;
+                            codeBranchSelect.appendChild(option);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error('AJAX请求失败:', xhr.status, xhr.statusText);
+                        codeBranchSelect.innerHTML = '<option value="" disabled selected>加载失败，请重试</option>';
+                    }
+                });
+            }
+
+            // 使用事件委托处理复选框变化
+            document.addEventListener('change', function (e) {
+                if (e.target.matches('[data-option-group]')) {
+                    const checkedBoxes = Array.from(document.querySelectorAll('[data-option-group]:checked'));
+                    const branchType = branchTypeSelect.value;
+                    const dynamicOptions = document.getElementById('dynamicOptions');
+                    const initialize_display = dynamicOptions.style.display === 'none';
+                    const hasProduct = checkedBoxes.filter(checkbox => {
+                        const label = checkbox.nextElementSibling; // 直接获取相邻的label元素
+                        return label.textContent.includes('产品');
+                    });
+                    console.log('hasProduct, initialize_display,checkedBoxes', hasProduct, initialize_display, checkedBoxes, codeBranchSelect);
+                    // 控制动态区域显示/隐藏
+                    dynamicOptions.style.display = hasProduct ? 'block' : 'none';
+
+                    // 如果包含产品类型且branch_type有值，立即加载分支
+                    if (hasProduct.length > 0 && initialize_display) {
+                        console.log("jin")
+                        loadCodeBranches(checkedBoxes.map(cb => cb.value), branchType);
+                    } else if (hasProduct.length === 0) {
+                        $('#id_code_branch').html('<option value="" selected disabled>请先选择产品类型</option>');
+                        // 取消所有多选框（checkbox）的选中状态
+                        const checkboxes = dynamicOptions.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+
+                        dynamicOptions.style.display = hasProduct ? 'none' : 'block';
+                    }
+                }
+            });
+
+            // branch_type变化事件（单独绑定）
+            if (branchTypeSelect) {
+                branchTypeSelect.addEventListener('change', function () {
+                    const checkedBoxes = Array.from(document.querySelectorAll('[data-option-group]:checked'));
+                    const branchType = branchTypeSelect.value
+                    const hasProduct = checkedBoxes.some(checkbox => {
+                        return checkbox.nextElementSibling.textContent.includes('产品');
+                    });
+
+                    if (hasProduct) {
+                        loadCodeBranches(checkedBoxes.map(cb => cb.value), branchType);
+                    }
+                });
+            }
+        });
+        // 自动消失的提示框
+        setTimeout(function () {
+            const alertBox = document.getElementById('alertBox1');
+            if (alertBox) {
+                alertBox.style.transition = 'opacity 0.5s';
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500);
+            }
+        }, 3000);
+    </script>
+{% endblock %}

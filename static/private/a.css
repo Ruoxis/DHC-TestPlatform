@@ -1,0 +1,27 @@
+[data-tip] {
+    position: relative;
+    display: inline-block; /* 确保容器正确包裹内容 */
+}
+
+[data-tip]::before {
+    content: attr(data-tip);
+    position: absolute;
+    white-space: nowrap;
+    top: 100%; /* 改为向下显示 */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 4px 8px; /* 稍增大内边距 */
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    margin-top: 5px; /* 与元素的间距 */
+    z-index: 10; /* 确保显示在最上层 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+}
+
+[data-tip]:hover::before {
+    opacity: 1;
+}

@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <label class="form-label fw-bold d-block mb-2">请选择分支</label>
+    <select class="form-select anchor-select" data-anchor="dropdown" name="code_branch">
+
+        {% if branches %}
+            {% for branch in branches %}
+                <option value="{{ branch.id }}">{{ branch.code_path }}：{{ branch.branch }}</option>
+            {% endfor %}
+        {% else %}
+            <option value="">暂无分支可选</option>
+        {% endif %}
+
+    </select>
+</div>

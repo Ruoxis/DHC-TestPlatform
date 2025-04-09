@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Anchor-Bootstrap-UI-Kit/assets/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'Anchor-Bootstrap-UI-Kit/assets/css/vendor/aos.css' %}" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- button triggering modal -->
+<button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModalCenter">
+    Basic vertical center
+</button>
+
+<!-- The modal itself -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pb-4 pr-4 pl-4 text-center">
+                    <img src="assets/img/favicon.ico">
+                    <h3 class="heading mt-4">Basic Modal</h3>
+                    <p>
+                        Do not keep silent when your own ideas and values are being attacked. If a dictatorship ever
+                        comes to this country, it will be by the fault of those who keep silent.
+                    </p>
+                    <p>
+                        <em class="text-muted">You can add any HTML in the body.</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="{% static 'bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Anchor-Bootstrap-UI-Kit/assets/js/functions.js' %}"></script>
+<script src="{% static 'Anchor-Bootstrap-UI-Kit/assets/js/vendor/aos.js' %}"></script>
+<script>AOS.init();</script>  <!-- 初始化 AOS 动画 -->
+</html>

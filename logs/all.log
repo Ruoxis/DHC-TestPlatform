@@ -1,0 +1,14 @@
+DEBUG 2025-04-07 10:01:32,477 [dj_db_conn_pool.core.mixins.core] default's pool has been created, parameter: {'pre_ping': True, 'echo': False, 'timeout': 30, 'recycle': 86400, 'pool_size': 10, 'max_overflow': 10}
+DEBUG 2025-04-07 10:01:32,480 [dj_db_conn_pool.core.mixins.core] got default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> from its pool
+DEBUG 2025-04-07 10:01:32,489 [dj_db_conn_pool.core.mixins.core] release default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> to its pool
+DEBUG 2025-04-07 10:07:57,698 [dj_db_conn_pool.core.mixins.core] got default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> from its pool
+DEBUG 2025-04-07 10:07:57,800 [dj_db_conn_pool.core.mixins.core] release default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> to its pool
+DEBUG 2025-04-07 10:07:59,759 [dj_db_conn_pool.core.mixins.core] got default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> from its pool
+DEBUG 2025-04-07 10:07:59,764 [dj_db_conn_pool.core.mixins.core] release default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> to its pool
+DEBUG 2025-04-07 10:08:01,944 [dj_db_conn_pool.core.mixins.core] got default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> from its pool
+DEBUG 2025-04-07 10:08:01,949 [dj_db_conn_pool.core.mixins.core] release default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> to its pool
+DEBUG 2025-04-07 10:08:03,073 [dj_db_conn_pool.core.mixins.core] got default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> from its pool
+DEBUG 2025-04-07 10:08:03,233 [dj_db_conn_pool.core.mixins.core] release default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> to its pool
+DEBUG 2025-04-07 10:08:10,207 [dj_db_conn_pool.core.mixins.core] got default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> from its pool
+DEBUG 2025-04-07 10:08:14,460 [dj_db_conn_pool.core.mixins.core] release default's connection <pymysql.connections.Connection object at 0x0000026504AA79D0> to its pool
+DEBUG 2025-04-07 10:08:45,577 [dj_db_conn_pool.core.mixins.core] release default's connection None to its pool

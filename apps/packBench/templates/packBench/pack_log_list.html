@@ -1,0 +1,91 @@
+{% extends "navigation/packBenchBase.html" %}
+{% load static %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+
+        <style>
+            /* Anchor UI 斑马纹表格样式 */
+            .anchor-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-family: system-ui, sans-serif;
+                margin: 0 auto;
+            }
+
+            /* 斑马纹实现 - 奇数行背景色 */
+            .anchor-table tbody tr:nth-child(odd) {
+                background-color: #e2e6ea; /* 浅灰色背景 */
+            }
+
+            /* 偶数行无背景色（透明） */
+            .anchor-table tbody tr:nth-child(even) {
+                background-color: transparent;
+            }
+
+            /* 数据单元格字体优化 */
+            .anchor-table tbody td {
+                font-weight: 400;
+                letter-spacing: normal;
+            }
+
+        </style>
+    </head>
+    <body>
+    <div class="table-container">
+        <table class="table anchor-table">
+            <thead class="thead-dark">
+            <tr class="table-dark">
+                <th width="9%" class="text-center" scope="col">环境</th>
+                <th width="9%" class="text-center" scope="col">执行人</th>
+                <th width="10%" class="text-center" scope="col">开始时间</th>
+                <th width="5%" class="text-center" scope="col">资源版本</th>
+                <th width="5%" class="text-center" scope="col">产品版本</th>
+                <th width="5%" class="text-center" scope="col">规则版本</th>
+                <th width="10%" class="text-center" scope="col">结束时间</th>
+                <th width="6%" class="text-center">状态</th>
+                <th width="20%" class="text-center hover-only">任务ID</th>
+                <th width="8%" class="text-center hover-only" scope="col">代码分支</th>
+                <th width="8%" class="text-center hover-only" scope="col">是否上传综服</th>
+                <th width="6%" class="text-center hover-only" scope="col">是否签名</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for log in pack_logs %}
+                <tr>
+                    <td class="text-center">{{ log.environment.name }}</td>
+                    <td class="text-center">{{ log.executor.first_name }}</td>
+                    <td class="text-center">{{ log.start_time }}</td>
+                    <td class="text-center">{{ log.resource_version }}</td>
+                    <td class="text-center">{{ log.product_version }}</td>
+                    <td class="text-center">{{ log.rule_version }}</td>
+                    <td class="text-center">{{ log.end_time }}</td>
+                    <td class="text-center">{{ log.get_status_display }}</td>
+                    <td class="text-center">{{ log.task_id }}</td>
+                    <td class="text-center">{{ log.branch.branch }}</td>
+                    <td class="text-center">{{ log.is_push_upload_zongfu }}</td>
+                    <td class="text-center">{{ log.is_sign }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 分页导航 -->
+    <br>
+    <div class="pagination">
+        <span>
+        <!-- 引入分页控件 -->
+        {% include 'pagination.html' %}
+        </span>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+    </script>
+{% endblock %}
+</body>
+</html>

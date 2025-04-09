@@ -1,0 +1,10 @@
+INFO 2025-04-07 10:01:31,907 [django.utils.autoreload] Watching for file changes with StatReloader
+INFO 2025-04-07 10:07:57,799 [django.server] "GET /pack/pack_operation/ HTTP/1.1" 200 23636
+INFO 2025-04-07 10:07:57,859 [django.server] "GET /static/private/a.css HTTP/1.1" 304 0
+INFO 2025-04-07 10:07:57,887 [django.server] "GET /static/packBench/js/main.js HTTP/1.1" 304 0
+WARNING 2025-04-07 10:07:58,707 [django.request] Not Found: /favicon.ico
+WARNING 2025-04-07 10:07:58,708 [django.server] "GET /favicon.ico HTTP/1.1" 404 2854
+INFO 2025-04-07 10:07:59,764 [django.server] "GET /pack/pack_operation/ HTTP/1.1" 200 23636
+INFO 2025-04-07 10:08:01,949 [django.server] "GET /pack/pack_operation/ HTTP/1.1" 200 23636
+INFO 2025-04-07 10:08:03,233 [django.server] "GET /pack/ajax/load_code_branches/?pack_types=1&branch_type=test HTTP/1.1" 200 328
+INFO 2025-04-07 10:08:14,460 [django.server] "POST /pack/pack_operation/ HTTP/1.1" 200 24699

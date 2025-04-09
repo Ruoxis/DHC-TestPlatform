@@ -1,0 +1,61 @@
+{% block scripts %}
+    <script>
+        // 服务类型选择联动显示高级选项（仅当选项包含"产品"时显示）
+        // 服务类型选择联动逻辑
+        document.querySelectorAll('[data-option-group]').forEach(checkbox => {
+
+            checkbox.addEventListener('change', function () {
+                // 获取所有选中的复选框
+                const checkedBoxes = Array.from(document.querySelectorAll('[data-option-group]:checked'));
+                var selectedValue = $('#branch_type').val();
+                // 检查是否有选中项包含"产品"
+                const productPackTypes = checkedBoxes.filter(checkbox => {
+                    const label = checkbox.nextElementSibling; // 直接获取相邻的label元素
+                    return label.textContent.includes('产品');
+                });
+
+                // 控制动态选项区的显示/隐藏
+                const dynamicOptions = document.getElementById('dynamicOptions');
+                var initialize_display = dynamicOptions.style.display === 'none';// 获取当前的状态，判断是否发送ajax请求
+
+                // 更现在的状态
+                dynamicOptions.style.display = productPackTypes.length > 0 ? 'block' : 'none'; // 更新状态
+
+                console.log(productPackTypes, initialize_display)
+
+                // 如果包含产品类型，则获取分支信息
+                document.getElementById('branch_type').addEventListener('change', function () {
+                    console.log("新选中的值:", this.value);
+                    const selectedPackTypes = checkedBoxes.map(cb => cb.value);
+                    // 发送AJAX请求
+                    $.ajax({
+                        url: "{% url 'pack:load_code_branches' %}",
+                        method: 'GET',
+                        data: {
+                            'pack_types': selectedPackTypes.join(',')  // 将数组转为逗号分隔字符串
+                        },
+                        beforeSend: function () {
+                            $('#id_code_branch').html('<option value="">加载中...</option>');
+                        },
+                        success: function (data) {
+                            $('#id_code_branch').html(data);
+                        },
+                        error: function () {
+                            $('#id_code_branch').html(
+                                '<option value="" disabled selected>加载失败，请重试</option>'
+                            );
+                        }
+                    });
+                });
+
+            });
+
+        });
+        setTimeout(function () {
+            var alertBox = document.getElementById('alertBox1');
+            if (alertBox) {
+                alertBox.style.opacity = 0;
+            }
+        }, 3000);
+    </script>
+{% endblock %}

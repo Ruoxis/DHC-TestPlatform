@@ -1,0 +1,215 @@
+{% extends "navigation/packBenchBase.html" %}
+{% block content %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>打包操作</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f7fc;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }
+
+            h1 {
+                text-align: center;
+                padding: 20px;
+                background-color: #4CAF50;
+                color: white;
+                margin-bottom: 30px;
+            }
+
+            form {
+                width: 60%;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                display: block;
+                color: #333;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+                box-sizing: border-box;
+            }
+
+            .form-group input[type="checkbox"] {
+                width: auto;
+                margin-right: 10px;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 12px 30px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
+
+            .alert {
+                top: 15%; /* 向下 110 像素 */
+                left: 50%; /* 将元素水平居中 */
+                transform: translateX(-50%); /* 通过移动 50% 元素宽度来实现精确居中 */
+                padding: 15px;
+            }
+
+            #upload_zongfu_field,
+            #sign_package_field,
+            #code_branch_field {
+                display: none;
+                margin-bottom: 20px;
+            }
+
+            .message {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                $('#id_pack_types').change(function () {
+                    var packTypeIds = $(this).val();
+                    var selectedPackTypes = Array.from(document.querySelectorAll('input[name="pack_types"]:checked')).map(checkbox => {
+                        return {
+                            value: checkbox.value,
+                            text: checkbox.parentElement.textContent.trim() // 获取文本
+                        };
+                    });
+                    var packTypeJson = {};
+                    var uploadZongfuField = document.getElementById('upload_zongfu_field');
+                    var computedStyle = window.getComputedStyle(uploadZongfuField);
+                    var PackTypesStatus = false
+                    if (selectedPackTypes.length > 0) {
+                        for (var i = 0; i < selectedPackTypes.length; i++) {
+                            packTypeJson[selectedPackTypes[i].value] = selectedPackTypes[i].text;
+                            if (selectedPackTypes[i].text.includes('产品') || selectedPackTypes[i].text.includes('内核')) {
+                                PackTypesStatus = true
+                                break
+                            }
+                        }
+                    }
+                    if (PackTypesStatus === true) {
+                        if (computedStyle.display === 'none') {
+                            $('#upload_zongfu_field').show();
+                            $('#sign_package_field').show();
+                            $('#code_branch_field').show();
+                            $.ajax({
+                                url: "{% url 'pack:load_code_branches' %}",
+                                data: {
+                                    'pack_types': selectedPackTypes[i].value
+                                },
+                                success: function (data) {
+                                    $('#id_code_branch').html(data);
+                                }
+                            });
+                        }
+                    } else {
+                        $('#id_upload_zongfu').prop('checked', false);
+                        $('#id_sign_package').prop('checked', false);
+                        $('#id_code_branch').val('');
+                        $('#upload_zongfu_field').hide();
+                        $('#sign_package_field').hide();
+                        $('#code_branch_field').hide();
+                    }
+                    console.log('packTypeJson', packTypeJson)
+                });
+            });
+        </script>
+    </head>
+    <body>
+
+    <h1>打包操作</h1>
+    {% if message %}
+        <div id="alertBox1" class="alert alert-primary d-flex align-items-center"
+             style="position: fixed; top: 120px; right: 20px; z-index: 1000; max-width: 400px;"
+             role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20"
+                 height="20"
+                 class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+                 viewBox="0 0 16 16"
+                 role="img"
+                 aria-label="Warning:">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+            <div>
+                {{ message }}
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ field.html_name }}
+        {% for field in form %}
+            {% if field.html_name not in "upload_zongfu sign_package code_branch" %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <div id="upload_zongfu_field" class="form-group">
+            {{ form.upload_zongfu.label_tag }} {{ form.upload_zongfu }}
+        </div>
+        <div id="sign_package_field" class="form-group">
+            {{ form.sign_package.label_tag }} {{ form.sign_package }}
+        </div>
+        <div id="code_branch_field" class="form-group">
+            {{ form.code_branch.label_tag }} {{ form.code_branch }}
+        </div>
+        <button type="submit" class="btn">提交</button>
+    </form>
+
+    <script>
+        setTimeout(function () {
+            var alertBox = document.getElementById('alertBox1');
+            if (alertBox) {
+                alertBox.style.opacity = 0;
+            }
+        }, 3000);
+    </script>
+    </body>
+    </html>
+{% endblock %}

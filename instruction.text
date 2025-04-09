@@ -1,0 +1,44 @@
+## 必要依赖
+aiohttp==3.11.16
+attrs==25.3.0
+billiard==4.2.1
+celery==5.3.0
+Django==5.1.7
+django-celery-beat==2.7.0
+django-celery-results==2.5.1
+django-db-connection-pool==1.2.5
+django-redis==5.4.0
+eventlet==0.39.1
+numpy==2.2.4
+openpyxl==3.1.5
+pandas==2.2.3
+pillow==11.1.0
+PyMySQL==1.1.1
+python-crontab==3.2.0
+python-dateutil==2.9.0.post0
+redis==5.2.1
+requests==2.32.3
+tqdm==4.67.1
+urllib3==2.3.0
+
+
+
+
+## celery启动指令
+celery -A TestProject worker -l info -P eventlet -c 1000 -Q default,pack,pack_io
+
+## django指令
+# ------数据迁移指令------ #
+python manage.py makemigrations
+python manage.py migrate
+# ------django启动指令------ #
+python manage.py runserver 0.0.0.0:8527
+
+
+#***************服务启动步骤***************#
+1、创建一个mysql数据库
+2、修改TestProject-setting.py中是数据连接方式
+3、执行数据迁移指令: python manage.py makemigrations  , python manage.py migrate
+4、安装redis，并启动redis
+5、启动celery: celery -A TestProject worker -l info -P eventlet -c 1000 -Q default,pack,pack_io
+6、启动django: python manage.py runserver 0.0.0.0:8527

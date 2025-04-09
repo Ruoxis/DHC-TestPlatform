@@ -1,0 +1,178 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .register-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .btn-register:hover {
+            background-color: #0056b3;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .alert {
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: white; /* 红色背景 */
+            color: #f44336;
+            border-radius: 5px;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div class="register-container">
+    <h1>注册</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- 用户名 -->
+        <div class="form-group">
+            <label for="id_username">用户名</label>
+            <input type="text" name="username" id="id_username" class="form-control" placeholder="请输入用户名"
+                   required>
+            <div class="help-text">{{ form.username.help_text }}</div>
+        </div>
+        <!-- 邮箱 -->
+        <div class="form-group">
+            <label for="id_email">邮箱</label>
+            <input type="email" name="email" id="id_email" class="form-control" placeholder="请输入邮箱" required>
+            <div class="help-text">{{ form.email.help_text }}</div>
+        </div>
+        <!-- 手机号 -->
+        <div class="form-group">
+            <label for="id_phone_number">手机号</label>
+            <input type="text" name="phone_number" id="id_phone_number" class="form-control" placeholder="请输入手机号"
+                   required>
+            <div class="help-text">{{ form.phone_number.help_text }}</div>
+        </div>
+        <!-- 用户头像 -->
+        <div class="form-group">
+            <label for="id_profile_picture">用户头像</label>
+            <input type="file" name="profile_picture" id="id_profile_picture" class="form-control">
+            <div class="help-text">{{ form.profile_picture.help_text }}</div>
+        </div>
+        <!-- 职能 -->
+        <div class="form-group">
+            <label for="id_user_type">职能</label>
+            <select name="user_type" id="id_user_type" class="form-control" required>
+                {% for value, label in form.user_type.field.choices %}
+                    <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+            <div class="help-text">{{ form.user_type.help_text }}</div>
+        </div>
+        <!-- 密码 -->
+        <div class="form-group">
+            <label for="id_password1">密码</label>
+            <input type="password" name="password1" id="id_password1" class="form-control" placeholder="请输入密码"
+                   required>
+            <div class="help-text">{{ form.password1.help_text }}</div>
+        </div>
+        <!-- 确认密码 -->
+        <div class="form-group">
+            <label for="id_password2">确认密码</label>
+            <input type="password" name="password2" id="id_password2" class="form-control" placeholder="请再次输入密码"
+                   required>
+            <div class="help-text">{{ form.password2.help_text }}</div>
+        </div>
+        <!-- 提交按钮 -->
+        <button type="submit" class="btn btn-primary btn-register">注册</button>
+    </form>
+    <div class="login-link">
+        <p>已有账号？<a href="{% url 'login' %}">登录</a></p>
+    </div>
+</div>
+<div id="alertBox" class="alert">
+    {% for error in form.non_field_errors %}
+
+        <div class="error" style="background-color: #f4f7fc">{{ error }}</div>
+    {% endfor %}
+</div>
+<!-- 引入 Bootstrap JS（可选，如果需要交互功能） -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 等待3秒后隐藏消息框
+    setTimeout(function () {
+        var alertBox = document.getElementById('alertBox');
+        alertBox.style.opacity = 0;  // 设置透明度为0
+    }, 3000); // 3000毫秒 = 3秒
+</script>
+</body>
+</html>

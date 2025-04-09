@@ -1,0 +1,144 @@
+DEBUG 2025-04-07 10:01:46,656 [celery.utils.functional] 
+def pack_product_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,656 [celery.utils.functional] 
+def pack_rule_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,657 [celery.utils.functional] 
+def pack_resource_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,657 [celery.utils.functional] 
+def process_results(self, results, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,657 [celery.utils.functional] 
+def error_handler(self, task_id, parent_task):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,658 [celery.utils.functional] 
+def pack_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,701 [celery.utils.functional] 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,702 [celery.utils.functional] 
+def error_handler(self, task_id, parent_task):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,702 [celery.utils.functional] 
+def xmap(task, it):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,702 [celery.utils.functional] 
+def backend_cleanup():
+    return 1
+
+DEBUG 2025-04-07 10:01:46,702 [celery.utils.functional] 
+def process_results(self, results, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,702 [celery.utils.functional] 
+def pack_product_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,702 [celery.utils.functional] 
+def pack_resource_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,704 [celery.utils.functional] 
+def chain(*args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,704 [celery.utils.functional] 
+def xstarmap(task, it):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,704 [celery.utils.functional] 
+def pack_rule_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,704 [celery.utils.functional] 
+def accumulate(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,705 [celery.utils.functional] 
+def pack_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,705 [celery.utils.functional] 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,705 [celery.utils.functional] 
+def chunks(task, it, n):
+    return 1
+
+DEBUG 2025-04-07 10:01:46,706 [celery.utils.functional] 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,341 [celery.utils.functional] 
+def pack_rule_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,342 [celery.utils.functional] 
+def chain(*args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,343 [celery.utils.functional] 
+def pack_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,343 [celery.utils.functional] 
+def xstarmap(task, it):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,343 [celery.utils.functional] 
+def error_handler(self, task_id, parent_task):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,343 [celery.utils.functional] 
+def accumulate(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,344 [celery.utils.functional] 
+def process_results(self, results, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,344 [celery.utils.functional] 
+def pack_resource_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,344 [celery.utils.functional] 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,345 [celery.utils.functional] 
+def chunks(task, it, n):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,345 [celery.utils.functional] 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,345 [celery.utils.functional] 
+def pack_product_package(self, *args, **kwargs):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,346 [celery.utils.functional] 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,346 [celery.utils.functional] 
+def xmap(task, it):
+    return 1
+
+DEBUG 2025-04-07 10:08:10,347 [celery.utils.functional] 
+def backend_cleanup():
+    return 1
+
