@@ -25,6 +25,7 @@ redis==5.2.1
 requests==2.32.3
 tqdm==4.67.1
 urllib3==2.3.0
+requests_toolbelt==1.0.0
 ```
 ### 环境依赖
 ```python
@@ -42,6 +43,8 @@ django指令
     1、数据迁移文件生成指令: python manage.py makemigrations
     2、数据迁移指令: python manage.py migrate
     3、启动服务指令: python manage.py runserver 0.0.0.0:8527
+    4、创建超级用户指令: python manage.py createsuperuser
+    
     
 python指令
     1、安装依赖: pip install -r requirements.txt
@@ -62,4 +65,35 @@ python指令
 ### 其他
 ```bash
 1、日志配置TestProject-setting.py-LOGGING 默认是不输出本地,如果需要放开则会输出到 logs文件目录
+```
+
+### 提交规范
+```python
+<type>(<scope>可选): <subject可选>
+<body>
+---------------------
+ 类型 (Type)
+feat: 新增功能
+
+fix: 修复 bug
+
+docs: 文档变更
+
+style: 代码格式调整（不影响代码逻辑）
+
+refactor: 代码重构（非功能新增也非 bug 修复）
+
+perf: 性能优化
+
+test: 测试相关变更
+
+chore: 构建过程或辅助工具的变动
+
+ci: CI 配置变更
+
+revert: 回退提交
+---------------------
+示例：
+docs(ui): 
+- 优化md文档
 ```
